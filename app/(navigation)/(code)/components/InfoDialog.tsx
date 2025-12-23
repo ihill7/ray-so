@@ -1,11 +1,11 @@
 import { Button } from "@/components/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/dialog";
-import { Info02Icon } from "@raycast/icons";
 import { Shortcut } from "@/components/kbd";
-import usePngClipboardSupported from "../util/usePngClipboardSupported";
-import { useCallback, useState } from "react";
-import useHotkeys from "@/utils/useHotkeys";
 import { SocialFooter } from "@/components/social-footer";
+import useHotkeys from "@/utils/useHotkeys";
+import { Info02Icon } from "@raycast/icons";
+import { useCallback, useState } from "react";
+import usePngClipboardSupported from "../util/usePngClipboardSupported";
 
 export function InfoDialog() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,13 +39,13 @@ export function InfoDialog() {
             <p>
               The project is Open Source and{" "}
               <a href="https://github.com/raycast/ray-so" className="text-gray-12 underline underline-offset-2">
-                available on Github
+                available on GitHub
               </a>
               .
             </p>
             <p>
               If you have any questions or feedback, please write to us on{" "}
-              <a href="https://x.com/raycastapp" className="text-gray-12 underline underline-offset-2">
+              <a href="https://x.com/raycast" className="text-gray-12 underline underline-offset-2">
                 𝕏
               </a>{" "}
               or{" "}
@@ -67,6 +67,7 @@ export function InfoDialog() {
               <Shortcut keys={["C"]}>Change colors</Shortcut>
               <Shortcut keys={["B"]}>Toggle background</Shortcut>
               <Shortcut keys={["D"]}>Toggle dark mode</Shortcut>
+              <Shortcut keys={["N"]}>Toggle line numbers</Shortcut>
               <Shortcut keys={["P"]}>Change padding</Shortcut>
               <Shortcut keys={["L"]}>Select language</Shortcut>
               <Shortcut keys={["⌥", "click"]}>Highlight line</Shortcut>

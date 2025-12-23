@@ -24,6 +24,10 @@ export const LANGUAGES: { [index: string]: Language } = {
     name: "Clojure",
     src: () => import("shiki/langs/clojure.mjs"),
   },
+  console: {
+    name: "Console",
+    src: () => import("shiki/langs/console.mjs"),
+  },
   crystal: {
     name: "Crystal",
     src: () => import("shiki/langs/crystal.mjs"),
@@ -115,6 +119,10 @@ export const LANGUAGES: { [index: string]: Language } = {
   latex: {
     name: "LaTeX",
     src: () => import("shiki/langs/latex.mjs"),
+  },
+  liquid: {
+    name: "Liquid",
+    src: () => import("shiki/langs/liquid.mjs"),
   },
   lisp: {
     name: "Lisp",
@@ -211,6 +219,10 @@ export const LANGUAGES: { [index: string]: Language } = {
   tsx: {
     name: "TSX",
     src: () => import("shiki/langs/tsx.mjs"),
+  },
+  v: {
+    name: "V",
+    src: () => import("shiki/langs/v.mjs"),
   },
   vue: {
     name: "Vue",

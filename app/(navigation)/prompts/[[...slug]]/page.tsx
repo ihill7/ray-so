@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { getAvailableAiModels } from "@/api/ai";
 import { Prompts } from "./prompts";
 import OgImage from "../assets/og-image.png";
+import { getExtensions } from "@/api/store";
+import { allPrompts } from "../prompts";
+import { getExtensionIdsFromString } from "@/utils/getExtensionIdsFromString";
 
 const pageTitle = "Prompt Explorer by Raycast";
 const pageDescription = "Easily browse, share, and add prompts to Raycast.";
@@ -27,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@raycastapp",
+    creator: "@raycast",
     title: pageTitle,
     description: pageDescription,
     images: [
@@ -44,5 +47,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const models = await getAvailableAiModels();
-  return <Prompts models={models} />;
+  const extensionIds = allPrompts.flatMap((prompt) => getExtensionIdsFromString(prompt.prompt));
+  const allExtensions = await getExtensions({ extensionIds });
+  return <Prompts models={models} extensions={allExtensions} />;
 }

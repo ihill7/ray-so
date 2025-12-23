@@ -1,5 +1,5 @@
 import { IconName, Icons } from "@raycast/icons";
-import { SVGProps } from "react";
+import { SVGProps, type JSX } from "react";
 
 export type Quicklink = {
   id: string;
@@ -135,6 +135,26 @@ const development: Quicklink[] = [
     link: "https://github.com/search?q={Query}&type=repositories",
   },
   {
+    id: "githubcopilot",
+    name: "Github Copilot",
+    link: "https://github.com/copilot?prompt={Query}",
+    description: "Quickly chat with Github Copilot",
+    author: {
+      name: "ViGeng",
+      link: "https://www.raycast.com/ViGeng/via=ViGeng",
+    },
+  },
+  {
+    id: "huggingface",
+    name: "Search Hugging Face",
+    description: "Search for models, datasets, and more",
+    link: "https://huggingface.co/search/full-text?q={Query}",
+    author: {
+      name: "ViGeng",
+      link: "https://www.raycast.com/ViGeng/via=ViGeng",
+    },
+  },
+  {
     id: "sentry",
     name: "Search Sentry Issues",
     link: "https://sentry.io/issues/?query={Query}&referrer=issue-list&statsPeriod=14d",
@@ -143,6 +163,20 @@ const development: Quicklink[] = [
     id: "npm",
     name: "Search NPM",
     link: "https://www.npmjs.com/search?q={Query}",
+  },
+  {
+    id: "pypi",
+    name: "Search PyPI",
+    link: "https://pypi.org/search/?q={Query}",
+    author: {
+      name: "Hasan Sezer Taşan",
+      link: "https://github.com/hasansezertasan",
+    },
+  },
+  {
+    id: "packagist",
+    name: "Search Packagist",
+    link: "https://packagist.org/?query={Query}",
   },
   {
     id: "dub",
@@ -160,12 +194,26 @@ const development: Quicklink[] = [
     link: "https://developer.mozilla.org/en-US/search?q={Query}",
   },
   {
+    id: "can-i-use",
+    name: "Can I Use",
+    link: "https://caniuse.com/?search={Query}",
+    author: {
+      name: "Frankie",
+      link: "https://github.com/toFrankie",
+    },
+  },
+  {
     id: "apple",
     name: "Search Apple Dev Docs",
     link: "https://developer.apple.com/search/?q={Query}&type=Documentation",
     icon: {
       name: "brand-apple",
     },
+  },
+  {
+    id: "devdocs",
+    name: "Search Dev Docs",
+    link: "https://devdocs.io?q={Query}",
   },
   {
     id: "radix",
@@ -271,6 +319,15 @@ const development: Quicklink[] = [
     link: "https://kotlinlang.org/docs/home.html?q={argument}&s=full",
     name: "Kotlin Docs",
   },
+  {
+    id: "weixin-docs",
+    name: "Search Weixin Docs",
+    link: "https://developers.weixin.qq.com/doc/search.html?doc_type=miniprogram&query={Query}",
+    author: {
+      name: "Frankie",
+      link: "https://github.com/toFrankie",
+    },
+  },
 ];
 
 const design: Quicklink[] = [
@@ -317,6 +374,15 @@ const design: Quicklink[] = [
     id: "icones",
     name: "Search Icones",
     link: "https://icones.js.org/collection/all?s={Query}",
+  },
+  {
+    id: "freepik",
+    name: "Search Freepik",
+    link: "https://www.freepik.com/search?ai=excluded&format=search&orientation=landscape&type=photo&license=free&query={Query}",
+    author: {
+      name: "Frankie",
+      link: "https://github.com/toFrankie",
+    },
   },
 ];
 
@@ -377,6 +443,26 @@ const search: Quicklink[] = [
     openWith: "Maps",
     icon: {
       name: "brand-apple",
+    },
+  },
+  {
+    id: "google-scholar",
+    name: "Search Google Scholar",
+    link: "https://scholar.google.com/scholar?q={Query}",
+    description: "Search for scientific articles in Google Scholar",
+    author: {
+      name: "ViGeng",
+      link: "https://www.raycast.com/ViGeng/via=ViGeng",
+    },
+  },
+  {
+    id: "semantic-scholar",
+    name: "Search Semantic Scholar",
+    link: "https://www.semanticscholar.org/search?q={Query}&sort=relevance",
+    description: "Search for scientific articles in Semantic Scholar",
+    author: {
+      name: "ViGeng",
+      link: "https://www.raycast.com/ViGeng/via=ViGeng",
     },
   },
   {
@@ -450,7 +536,45 @@ const search: Quicklink[] = [
       name: "Dakota Chambers",
       link: "https://github.com/dcchambers",
     },
-  }
+  },
+  {
+    id: "bing",
+    name: "Search Bing",
+    link: "https://www.bing.com/search?q={Query}",
+    author: {
+      name: "Roman Roan",
+      link: "https://github.com/romanr",
+    },
+  },
+  {
+    id: "bing-images",
+    name: "Search Bing Images",
+    link: "https://www.bing.com/images/search?q={Query}",
+    author: {
+      name: "Roman Roan",
+      link: "https://github.com/romanr",
+    },
+  },
+  {
+    id: "unduck",
+    name: "Search Unduck",
+    link: "https://unduck.link?q={query}",
+  },
+  {
+    id: "leo",
+    name: "Search Leo",
+    description: "Look up words in the English-German dictionary in Leo",
+    link: "https://dict.leo.org/german-english/{Query}",
+    author: {
+      name: "ViGeng",
+      link: "https://www.raycast.com/ViGeng/via=ViGeng",
+    },
+  },
+  {
+    id: "qwant",
+    name: "Search Qwant",
+    link: "https://qwant.com/?q={Query}",
+  },
 ];
 
 const shopping: Quicklink[] = [
@@ -581,6 +705,11 @@ const entertainment: Quicklink[] = [
       link: "https://github.com/gianpispi",
     },
   },
+  {
+    id: "genius",
+    name: "Search Genius",
+    link: "https://genius.com/search?q={Query}",
+  },
 ];
 
 const socials: Quicklink[] = [
@@ -588,7 +717,7 @@ const socials: Quicklink[] = [
     id: "tweets",
     name: "Search Tweets",
     description: "Search from a list of users",
-    link: 'https://x.com/search?q={argument name="query" | raw}%20from:{argument name="handle" options="@samuelkraft ,  @raycastapp , @peduarte , @thomaspaulmann " default="@samuelkraft" | raw}&src=typed_query&f=live',
+    link: 'https://x.com/search?q={argument name="query" | raw}%20from:{argument name="handle" options="@samuelkraft ,  @raycast , @peduarte , @thomaspaulmann " default="@samuelkraft" | raw}&src=typed_query&f=live',
   },
   {
     id: "linkedin",
@@ -693,6 +822,196 @@ const misc: Quicklink[] = [
       link: "https://infosec.exchange/@Onyx/",
     },
   },
+  {
+    id: "shortcuts",
+    name: "Run Apple Shortcut",
+    description: "Run a Shortcut saved in your Shortcuts collection.",
+    link: "shortcuts://run-shortcut?name={Query}",
+    icon: {
+      name: "arrow-ne",
+    },
+  },
+  {
+    id: "Makerworld",
+    name: "Search Makerworld",
+    description: "Search Makerworld.com for 3d models.",
+    link: "https://makerworld.com/en/search/models?keyword={query}",
+    author: {
+      name: "Nate Whistler",
+      link: "https://infosec.exchange/@Onyx/",
+    },
+  },
+];
+const science: Quicklink[] = [
+  {
+    id: "search-ensembl",
+    name: "Search the Ensembl Database",
+    description: "Search for a gene, variant, transcript, etc. in the ENSEMBL database",
+    link: 'https://www.ensembl.org/Multi/Search/Results?q={argument name="Search term"};site=ensembl',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "ucsc-gene-search",
+    name: "UCSC Genome Browser (Gene - hg38)",
+    description: "Open the UCSC genome browser at a gene locus – Human Genome b38",
+    link: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position={argument name="Gene Name"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "ucsc-position-search",
+    name: "UCSC Genome Browser (Position - hg38)",
+    description: "Open the UCSC genome browser at a genomic region – Human Genome b38",
+    link: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position={argument name="Chromosome (inc. chr)"}:{argument name="Start Position"}-{argument name="End Position"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-ncbi",
+    name: "Search NCBI",
+    description: "Search NCBI database",
+    link: 'https://www.ncbi.nlm.nih.gov/search/all/?term={argument name="Search term"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-genecards",
+    name: "Search GeneCards database",
+    description: "Open the GeneCards page for a given gene",
+    link: 'https://www.genecards.org/cgi-bin/carddisp.pl?gene={argument name="Gene"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-pubmed",
+    name: "Search Pubmed for a manuscript",
+    description: "Search for manuscripts in Pubmed",
+    link: 'https://pubmed.ncbi.nlm.nih.gov/?term={argument name="Search term"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "blank-document",
+    },
+  },
+  {
+    id: "search-googlescholar",
+    name: "Search Google Scholar for a manuscript, books, or patents",
+    description: "Search for manuscripts in Pubmed",
+    link: 'https://scholar.google.com/scholar?hl=en&as_sdt=0,5&q={argument name="Term"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "book",
+    },
+  },
+  {
+    id: "search-gwascatalog",
+    name: "Search GWAS Catalog",
+    description:
+      "Search GWAS Catalog for a gene (HGNC/Ensembl), genomic regions (6:167120000-167130000), phenotype, or variant rsID",
+    link: 'https://www.ebi.ac.uk/gwas/search?query={argument name="Gene/Phenotype/Variant"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-gnomad-v4-variant",
+    name: "Search gnomAD v4 (Variant)",
+    description: "Search gnomAD database for a variant rsID (rs548932103) or gnomAD ID (6-137871434-C-T)",
+    link: 'https://gnomad.broadinstitute.org/variant/{argument name="Variant: rsID/chr-pos-ref-alt"}?dataset=gnomad_r4',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-gnomad-v4-gene",
+    name: "Search gnomAD v4 (Gene)",
+    description: "Search gnomAD database for a gene (HGNC Symbol or Ensembl ID)",
+    link: 'https://gnomad.broadinstitute.org/gene/{argument name="Gene: HGNC/ENSEMBL"}?dataset=gnomad_r4',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-uniprot",
+    name: "Search UniProt",
+    description: "Search UniProt database for proteins",
+    link: 'https://www.uniprot.org/uniprotkb?query={argument name="Protein/Gene Name"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "dna",
+    },
+  },
+  {
+    id: "search-biorxiv",
+    name: "Search bioRxiv",
+    description: "Search bioRxiv for biology preprints",
+    link: 'https://www.biorxiv.org/search/{argument name="Search Term"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "blank-document",
+    },
+  },
+  {
+    id: "search-rxiv",
+    name: "Search aRxiv",
+    description: "Search aRxiv for preprints",
+    link: 'https://arxiv.org/search/?query={argument name="Search Term"}&searchtype=all&source=header',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "blank-document",
+    },
+  },
+  {
+    id: "search-med",
+    name: "Search medRxiv",
+    description: "Search medRxiv for medical preprints",
+    link: 'https://www.medrxiv.org/search/{argument name="Search Term"}',
+    author: {
+      name: "Yassine Souilmi",
+    },
+    icon: {
+      name: "blank-document",
+    },
+  },
 ];
 
 type IconComponent = (props: SVGProps<SVGSVGElement>) => JSX.Element;
@@ -759,6 +1078,12 @@ export const categories: Category[] = [
     slug: "/misc",
     quicklinks: [...misc],
     icon: "folder" as IconName,
+  },
+  {
+    name: "Science",
+    slug: "/science",
+    quicklinks: [...science],
+    icon: "dna" as IconName,
   },
 ].map((category) => {
   return {

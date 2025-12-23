@@ -4,10 +4,13 @@ import { Metadata } from "next";
 import { Shared } from "./shared";
 import { Prompt } from "../prompts";
 import { nanoid } from "nanoid";
+import { getExtensions } from "@/api/store";
+import { getExtensionIdsFromString } from "@/utils/getExtensionIdsFromString";
+import { validatePromptData } from "@/utils/sanitizePromptContent";
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 function parseURLPrompt(promptQueryString?: string | string[]): Prompt[] {
@@ -20,14 +23,34 @@ function parseURLPrompt(promptQueryString?: string | string[]): Prompt[] {
   } else {
     prompts = [promptQueryString];
   }
-  return prompts.map((prompt) => ({
-    ...JSON.parse(prompt),
-    id: nanoid(),
-    isShared: true,
-  }));
+
+  const validPrompts: Prompt[] = [];
+
+  for (const prompt of prompts) {
+    try {
+      const parsedPrompt = JSON.parse(prompt);
+      const validatedPrompt = validatePromptData(parsedPrompt);
+
+      if (validatedPrompt) {
+        validPrompts.push({
+          ...validatedPrompt,
+          id: nanoid(),
+          isShared: true,
+        });
+      }
+    } catch (error) {
+      // Skip invalid JSON, log error in development
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Invalid prompt data in URL:', error);
+      }
+    }
+  }
+
+  return validPrompts;
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const prompts = parseURLPrompt(searchParams.prompts as string);
   if (!prompts) {
     notFound();
@@ -56,7 +79,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       },
       twitter: {
         card: "summary_large_image",
-        creator: "@raycastapp",
+        creator: "@raycast",
         title: pageTitle,
         description: pageDescription,
         images: [
@@ -69,7 +92,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
         "twitter:label1": "Model",
         "twitter:data": prompt.model || "openai-gpt-4o-mini",
         "twitter:label2": "Creativity",
-        "twitter:data2": prompt.creativity,
+        "twitter:data2": prompt.creativity || "none",
       },
     };
   } else {
@@ -99,7 +122,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       },
       twitter: {
         card: "summary_large_image",
-        creator: "@raycastapp",
+        creator: "@raycast",
         title: pageTitle,
         description: pageDescription,
         images: [
@@ -112,10 +135,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page(props: Props) {
+  const searchParams = await props.searchParams;
   const prompts = parseURLPrompt(searchParams.prompts as string);
   if (!prompts) {
     notFound();
   }
-  return <Shared prompts={prompts} />;
+  const extensionIds = prompts.flatMap((prompt) => getExtensionIdsFromString(prompt.prompt));
+  const allExtensions = await getExtensions({ extensionIds });
+  return <Shared prompts={prompts} extensions={allExtensions} />;
 }

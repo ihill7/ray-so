@@ -7,11 +7,10 @@ import { PageWithThemeMode } from "@themes/components/page-with-theme-mode";
 import { Metadata } from "next";
 import { BASE_URL } from "@/utils/common";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { theme: [author: string, theme: string] };
+export async function generateMetadata(props: {
+  params: Promise<{ theme: [author: string, theme: string] }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   const [author, themeName] = params.theme;
 
   const slug = `${author}/${themeName}`;
@@ -22,14 +21,8 @@ export async function generateMetadata({
     return {};
   }
 
-  const { colors, ...restTheme } = theme;
-
-  const queryParams = new URLSearchParams();
-  Object.entries(restTheme).forEach(([key, value]) => queryParams.set(key, value));
-  Object.entries(colors).forEach(([key, value]) => queryParams.set(key, value));
-
-  const title = `${restTheme.name} by ${restTheme.author}`;
-  const image = `${BASE_URL}/themes/og?${queryParams}`;
+  const title = `${theme.name} by ${theme.author}`;
+  const image = `${BASE_URL}/themes/${theme.slug}/opengraph-image`;
 
   return {
     title,
@@ -53,7 +46,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function ThemePage({ params }: { params: { theme: [author: string, theme: string] } }) {
+export default async function ThemePage(props: { params: Promise<{ theme: [author: string, theme: string] }> }) {
+  const params = await props.params;
   const [author, themeName] = params.theme;
   const slug = `${author}/${themeName}`;
   const themes = await getAllThemes();
