@@ -4,11 +4,11 @@ import { Metadata } from "next";
 import { Shared } from "./shared";
 import { Quicklink } from "../quicklinks";
 import { nanoid } from "nanoid";
-import { Base64 } from "js-base64";
+import { isValidLink } from "../utils/isValidLink";
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 function parseURLQuicklink(quicklinkQueryString?: string | string[]): Quicklink[] {
@@ -34,7 +34,8 @@ function parseURLQuicklink(quicklinkQueryString?: string | string[]): Quicklink[
   }));
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const quicklinks = parseURLQuicklink(searchParams.quicklinks as string);
   if (!quicklinks) {
     notFound();
@@ -45,8 +46,9 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     const pageTitle = `${quicklink.name} - Raycast Quicklink`;
     const pageDescription = "Raycast Quicklink";
     let iconUrl = "";
-    if (quicklink?.icon?.link || quicklink.link.startsWith("https")) {
-      const url = new URL(quicklink?.icon?.link || quicklink.link);
+    const iconLink = quicklink?.icon?.link || quicklink.link;
+    if (isValidLink(iconLink)) {
+      const url = new URL(iconLink);
       const domain = url.hostname.replace("www.", "");
       iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
     }
@@ -71,7 +73,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       },
       twitter: {
         card: "summary_large_image",
-        creator: "@raycastapp",
+        creator: "@raycast",
         title: pageTitle,
         description: pageDescription,
         images: [
@@ -108,7 +110,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       },
       twitter: {
         card: "summary_large_image",
-        creator: "@raycastapp",
+        creator: "@raycast",
         title: pageTitle,
         description: pageDescription,
         images: [
@@ -121,7 +123,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page(props: Props) {
+  const searchParams = await props.searchParams;
   const quicklinks = parseURLQuicklink(searchParams.quicklinks as string);
   if (!quicklinks) {
     notFound();
